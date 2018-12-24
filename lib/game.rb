@@ -55,9 +55,7 @@ class Game
   end
   
   def turn
-    if !Board.full? && Board.valid_move? == true
-      Board.update(position, player)
-    end
+    
   end
   
 end
