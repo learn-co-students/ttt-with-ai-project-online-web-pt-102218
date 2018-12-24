@@ -26,10 +26,9 @@ class Board
     if @cells.include?(" ")
       return false
     else
-      return "truthy value"
+      return true
     end
   end
-  
   
   def turn_count
     @cells.count("X") + @cells.count("O")
@@ -49,9 +48,8 @@ class Board
     end
   end
   
-  def update(token, player)
-    @cells[token.to_i - 1] = "X" || "O"
+  def update(position, player)
+    self.cells[position.to_i-1] = player.token
   end
-      
   
 end
