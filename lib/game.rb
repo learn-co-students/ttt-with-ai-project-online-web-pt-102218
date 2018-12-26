@@ -17,10 +17,11 @@ class Game
     @board = board
     @player_1 = player_1
     @player_2 = player_2
+    #@board.display
   end
   
   def current_player
-    player_1 || player_2
+    board.turn_count.odd? ? player_2 : player_1
   end
   
   def won?
@@ -44,18 +45,33 @@ class Game
   end
   
   def winner
-    #binding.pry
-    if board.cells.count("X") > board.cells.count("O")
-      return player_1.token
-    elsif board.cells.count("X") == board.cells.count("O")
-      return nil
-    else
-      return player_2.token
+    if won?
+      combination = won?
+      @board.cells[combination[0]] # X or O
     end
   end
   
   def turn
-    
+    puts "Please enter a number 1-9:"
+    @user_input = current_player.move(@board)
+    #binding.pry
+    if @board.valid_move?(@user_input)
+      @board.update(@user_input, current_player)
+    else puts "Please enter a number 1-9:"
+      @board.display
+      turn
+    end
+    @board.display
+  end
+  
+  def play
+    turn until over?
+    #binding.pry
+    if won?
+      puts "Congratulations #{winner}!"
+    elsif draw?
+    puts "Cat's Game!"
+    end
   end
   
 end

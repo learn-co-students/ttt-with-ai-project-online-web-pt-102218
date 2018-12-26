@@ -6,7 +6,6 @@ module Players
 #Even though the method accepts a board argument, it does not need to use it.
     
     def move(board)
-      puts "Please enter 1-9 to place your token"
       input = gets.strip
     end
     
