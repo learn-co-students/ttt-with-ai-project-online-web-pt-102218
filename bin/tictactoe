@@ -3,7 +3,6 @@
 require_relative '../config/environment'
 
 def start_game
-
   puts "Hello Welcome to TicTacToe"
   puts "What kind of game will you like to play? Please choose player mode:
   
@@ -26,7 +25,12 @@ def start_game
   elsif player_mode == "0"
     Game.new(Players::Computer.new("X"), Players::Computer.new("O"), Board.new).play
   end
-  puts "Would you like to play again? [y/n]"
+  puts "Would you like to play again? [y/n], type 'n' twice to exit."
+  if gets.strip == "y"
+  start_game
+  elsif gets.strip == "n"
+  exit
+  end
 end
 
-start_game until gets.strip == "n"
+start_game
