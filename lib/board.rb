@@ -29,7 +29,11 @@ class Board
   end
   
   def turn_count
-    @cells.count("X") + @cell.count("O")
+    @cells.count("X") + @cells.count("O")
+  end
+  
+  def taken?(input)
+    @cells[input.to_i - 1] != " " ? true : false
   end
   
   
