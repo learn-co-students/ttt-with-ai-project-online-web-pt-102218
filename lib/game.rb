@@ -1,6 +1,7 @@
 class Game
   
-  attr_accessor :player_1, :player_2, :board, :winner
+  attr_accessor :player_1, :player_2, :board
+
   
   WIN_COMBINATIONS = [
     [0,1,2],
@@ -41,7 +42,6 @@ class Game
   end
   
   def winner
-    #binding.pry
     if won?
       combination = won?
       @board.cells[combination[0]]
@@ -49,6 +49,12 @@ class Game
   end
   
   def turn
+    puts "Place your token in positons 1-9"
+    gets.strip
+    if valid_move?(position)
+      update(position, player)
+    end
   end
   
+
 end
