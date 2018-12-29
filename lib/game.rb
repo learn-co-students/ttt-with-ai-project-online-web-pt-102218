@@ -1,6 +1,6 @@
 class Game
   
-  attr_accessor :player_1, :player_2, :board
+  attr_accessor :player_1, :player_2, :board, :winner
 
   
   WIN_COMBINATIONS = [
@@ -38,7 +38,7 @@ class Game
   end
   
   def over?
-    draw? || won? ? true : false
+    (draw? || won?) ? true : false
   end
   
   def winner
@@ -49,12 +49,66 @@ class Game
   end
   
   def turn
-    puts "Place your token in positons 1-9"
-    gets.strip
-    if valid_move?(position)
-      update(position, player)
+    puts "Enter 1-9 to place your token"
+    @board.display
+    user_input = current_player.move(board)
+    if @board.valid_move?(user_input)
+      @board.update(user_input, current_player)
+    else
+      @board.display
+      turn
+    end
+    @board.display
+  end
+  
+  def play
+    turn until over?
+    if won?
+      puts "Congratulations #{winner}!"
+    elsif draw?
+      puts "Cat's Game!"
     end
   end
   
-
-end
+  def start_game
+    start
+    goodbye
+  end
+  
+  def start
+    puts "Welcome to Tic Tac Toe"
+    puts "Choose what game type you would like to play:
+    
+    0 - Computer vs. Computer
+    1 - Player vs Computer
+    2 - Player vs. Player"
+    
+    player_mode = gets.strip
+    
+    if player_mode == "0"
+      Game.new(Players::Computer.new("X"), Players::Computer.new("O"), board = Board.new).play
+    
+      elsif player_mode == "1"
+       puts "Would you like to be player_1 [y/n]"
+        if gets.strip == "y"
+        Game.new(Players::Human.new("X"), Players::Computer.new("O"), board = Board.new).play
+        elsif gets.strip == "n"
+        Game.new(Players::Computer.new("X"), Players::Human.new("O"), board = Board.new).play
+        end
+      
+      elsif player_mode == "2"
+          Game.new(Players::Human.new("X"), Players::Human.new("O"), board = Board.new).play
+      end
+        
+      puts "Would you like to play again [y/n] if 'n' type 'n' twice to exit"
+        if gets.strip == "y"
+        start_game
+        elsif gets.strip == "n"
+        exit
+      end
+    end
+  
+    def goodbye
+      puts "Come back and play. Have a great day!"
+    end
+  end
