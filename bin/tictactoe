@@ -1,3 +1,20 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/environment'
+
+puts 'Welcome to the Tic Tac Toe game!'
+count = -1
+until (0..2).cover?(count)
+  puts 'How many human players? (0-2)'
+  count = gets.chomp.to_i
+end
+game = case count
+       when 0
+         Game.new(Players::Computer.new('X'), Players::Computer.new('0'))
+       when 1
+         Game.new(Players::Human.new('X'), Players::Computer.new('0'))
+       else
+         Game.new
+      end
+
+game.play
